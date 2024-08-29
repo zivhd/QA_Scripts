@@ -5,14 +5,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-# Set up the WebDriver for Edge
+# Set up the WebDriver for your device. im using edge
 service = Service(executable_path='C:\\WebDriver\\msedgedriver.exe')
 driver = webdriver.Edge(service=service)
 
-# Open a webpage
+# add website here
 driver.get("")
 error_occurred = False
-delay = 2  # Delay in seconds
+delay = 0.5  
+# add category you want to test
 category = ""
 
 def filter_expand(filter_name):
@@ -38,11 +39,10 @@ def ensure_filter_expanded(filter_name):
                 f"//button[contains(@class, 'items-center') and contains(@class, 'justify-between') and contains(@class, 'transition-all') and contains(text(), '{filter_name}')]"
             ))
         )
-        # Check if filter is not expanded
         if filter_box.get_attribute('aria-expanded') == 'false':
             filter_box.click()
             print(f"Expanded filter: {filter_name}")
-            time.sleep(1)  # Small delay to allow the filter to expand
+            time.sleep(1)  
     except Exception as e:
         print(f"Failed to ensure filter is expanded: {filter_name}, due to: {e}")
 
@@ -73,9 +73,11 @@ try:
     category_link.click()
     print(f"Clicked '{category}' category link")
     time.sleep(delay)
-
+    # add more if ncessary
     click_filter_button("Fandom")
+    time.sleep(delay)
 
+    # this tests seller and price
     button_locator = (By.XPATH, "//button[@type='button' and @role='checkbox' and @aria-checked='false' and @data-state='unchecked' and @value='on' and contains(@class, 'peer')]")
     while True:
             buttons = WebDriverWait(driver, 10).until(
@@ -90,7 +92,6 @@ try:
         
 
 finally:
-    # Close the browser only if no errors occurred
     if not error_occurred:
         driver.quit()
 
