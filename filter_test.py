@@ -48,7 +48,7 @@ def ensure_filter_expanded(filter_name):
 
 
 def click_filter_button(filter_name):
-    while True:
+    while len(buttons) < 3:
         ensure_filter_expanded(filter_name)
         buttons = WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.XPATH, "//div[@class='flex']//button[@role='checkbox' and @aria-checked='false']"))
@@ -59,6 +59,8 @@ def click_filter_button(filter_name):
         button.click()
         print("Clicked a filter button")
         time.sleep(delay)
+
+
 
 try:
     shop_button = WebDriverWait(driver, 10).until(
