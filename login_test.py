@@ -124,7 +124,7 @@ try:
     open_hamburger()
     open_login_modal()
     press_and_input_username("zivseller")
-    press_and_input_password("zivseller123!")
+    press_and_input_password("TEST")
     press_login()
     time.sleep(5)
 
