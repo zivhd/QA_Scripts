@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -6,15 +7,22 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 # Set up the WebDriver for your device. im using edge
-service = Service(executable_path='C:\\WebDriver\\msedgedriver.exe')
-driver = webdriver.Edge(service=service)
+# Set up Chrome options
+chrome_options = Options()
+chrome_options.add_argument("--start-maximized")
+
+# Specify the path to chromedriver
+service = Service('/usr/bin/chromedriver')
+
+# Initialize WebDriver
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # add website here
-driver.get("")
+driver.get("https://www.dev.tokiasia.com/")
 error_occurred = False
 delay = 0.5  
 # add category you want to test
-category = ""
+category = "Funko"
 
 def filter_expand(filter_name):
     try:
@@ -48,10 +56,11 @@ def ensure_filter_expanded(filter_name):
 
 
 def click_filter_button(filter_name):
-    while len(buttons) < 3:
+    while True:
         ensure_filter_expanded(filter_name)
+        time.sleep(delay)
         buttons = WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.XPATH, "//div[@class='flex']//button[@role='checkbox' and @aria-checked='false']"))
+            EC.presence_of_all_elements_located((By.XPATH, "//button[@role='checkbox' and @aria-checked='false']"))
         )
         if not buttons:
             break
@@ -59,6 +68,8 @@ def click_filter_button(filter_name):
         button.click()
         print("Clicked a filter button")
         time.sleep(delay)
+        if len(buttons) <= 3:
+            break
 
 
 
@@ -81,7 +92,9 @@ try:
 
     # this tests seller and price
     button_locator = (By.XPATH, "//button[@type='button' and @role='checkbox' and @aria-checked='false' and @data-state='unchecked' and @value='on' and contains(@class, 'peer')]")
-    while True:
+    max = 50
+    while max != 0:
+            max =- 1
             buttons = WebDriverWait(driver, 10).until(
                 EC.presence_of_all_elements_located(button_locator)
             )
@@ -92,7 +105,6 @@ try:
             print("Clicked a filter button")
             time.sleep(delay)
         
-
 finally:
     if not error_occurred:
         driver.quit()
