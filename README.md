@@ -1,6 +1,7 @@
 *requirements*
 - python 3
 - selenium (pip install selenium)
+
 *filter_test.py*
  - this uses chromedriver, download chromedriver or use your preferred webdriver
  - change the path of Service to the path of your webdriver and change accordingly
