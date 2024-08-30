@@ -1,4 +1,3 @@
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,9 +13,6 @@ driver.get("https://www.dev.tokiasia.com/")
 error_occurred = False
 delay = 0.5  
 
-
-
-
 def open_signup_modal():
     try:
         signup = WebDriverWait(driver, 10).until(
@@ -27,15 +23,12 @@ def open_signup_modal():
         )
         signup.click()
         print("Opened signup modal")
-
-
     except Exception as e:
-        print(f"Failed to open logindue to: {e}")
+        print(f"Failed to open signup modal due to: {e}")
         return False
     return True
 
 def click_create_account():
-
     try:
         create_account = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
@@ -45,15 +38,12 @@ def click_create_account():
         )
         create_account.click()
         print("Opened create account modal")
-
-
     except Exception as e:
-        print(f"Failed to open create account due to: {e}")
+        print(f"Failed to open create account modal due to: {e}")
         return False
     return True
 
 def click_get_started():
-
     try:
         get_started = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
@@ -62,15 +52,11 @@ def click_get_started():
             ))
         )
         get_started.click()
-        print("Opened create account modal")
-
-
+        print("Opened get started page")
     except Exception as e:
-        print(f"Failed to open create account due to: {e}")
+        print(f"Failed to open get started page due to: {e}")
         return False
     return True
-
-
 
 def press_and_input_first_name(first_name):
     try:
@@ -81,15 +67,14 @@ def press_and_input_first_name(first_name):
             ))
         )
         first_name_field.click()
-        print("Clicked first_name field")
+        print("Clicked first name field")
         first_name_field.send_keys(first_name)
-        print("Sent keys to first_name field")
-
-
+        print("Sent keys to first name field")
     except Exception as e:
-        print(f"Failed to input first_name to: {e}")
+        print(f"Failed to input first name due to: {e}")
         return False
     return True
+
 def press_and_input_last_name(last_name):
     try:
         last_name_field = WebDriverWait(driver, 10).until(
@@ -99,14 +84,14 @@ def press_and_input_last_name(last_name):
             ))
         )
         last_name_field.click()
-        print("Clicked last_name field")
+        print("Clicked last name field")
         last_name_field.send_keys(last_name)
-        print("Sent keys to last_name field")
-
+        print("Sent keys to last name field")
     except Exception as e:
-        print(f"Failed to input last_name: {e}")
+        print(f"Failed to input last name due to: {e}")
         return False
     return True
+
 def press_and_input_display_name(display_name):
     try:
         display_name_field = WebDriverWait(driver, 10).until(
@@ -116,14 +101,14 @@ def press_and_input_display_name(display_name):
             ))
         )
         display_name_field.click()
-        print("Clicked display_name field")
+        print("Clicked display name field")
         display_name_field.send_keys(display_name)
-        print("Sent keys to display_name field")
-
+        print("Sent keys to display name field")
     except Exception as e:
-        print(f"Failed to input display_name: {e}")
+        print(f"Failed to input display name due to: {e}")
         return False
     return True
+
 def press_and_input_email(email):
     try:
         email_field = WebDriverWait(driver, 10).until(
@@ -135,12 +120,12 @@ def press_and_input_email(email):
         email_field.click()
         print("Clicked email field")
         email_field.send_keys(email)
-        print("Sent keys to email field")
-
+        print(f"Sent {email} to email field")
     except Exception as e:
-        print(f"Failed to input email: {e}")
+        print(f"Failed to input email due to: {e}")
         return False
     return True
+
 def press_and_input_mobile(mobile):
     try:
         mobile_field = WebDriverWait(driver, 10).until(
@@ -152,13 +137,11 @@ def press_and_input_mobile(mobile):
         mobile_field.click()
         print("Clicked mobile field")
         mobile_field.send_keys(mobile)
-        print("Sent keys to mobile field")
-
+        print(f"Sent {mobile} to mobile field")
     except Exception as e:
-        print(f"Failed to input mobile: {e}")
+        print(f"Failed to input mobile due to: {e}")
         return False
     return True
-
 
 def press_and_input_username(username):
     try:
@@ -170,13 +153,10 @@ def press_and_input_username(username):
         )
         username_field.click()
         print("Clicked username field")       
-
         username_field.send_keys(username)
-        print("Sent keys to username field")
-
-
+        print(f"Sent {username} to username field")
     except Exception as e:
-        print(f"Failed to input password_field to: {e}")
+        print(f"Failed to input username due to: {e}")
         return False
     return True
 
@@ -190,7 +170,6 @@ def press_and_input_password(password):
         )
         password_field.click()
         print("Clicked password field")       
-
         password_field.send_keys(password)
         print("Sent keys to password field")
 
@@ -202,58 +181,44 @@ def press_and_input_password(password):
         )
         confirm_password_field.click()
         print("Clicked confirm password field")       
-
         confirm_password_field.send_keys(password)
-        print("Sent keys to confirm_password_field")
-
-
+        print(f"Sent {password} to confirm password field")
     except Exception as e:
-        print(f"Failed to input password_field to: {e}")
+        print(f"Failed to input password due to: {e}")
         return False
     return True
 
-
 def click_next():
     try:
-        next = WebDriverWait(driver, 10).until(
+        next_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
                 By.XPATH, 
                 "//button[contains(text(), 'Next')]"
             ))
         )
-        next.click()
-        print("Clicked next")
-
-
+        next_button.click()
+        print("Clicked Next")
     except Exception as e:
-        print(f"Failed to click nextto: {e}")
+        print(f"Failed to click Next due to: {e}")
         return False
     return True
 
 def click_submit():
     try:
-        next = WebDriverWait(driver, 10).until(
+        submit_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
                 By.XPATH, 
                 "//button[contains(text(), 'Submit')]"
             ))
         )
-        next.click()
-        print("Clicked next")
-
-
+        submit_button.click()
+        print("Clicked Submit")
     except Exception as e:
-        print(f"Failed to click nextto: {e}")
+        print(f"Failed to click Submit due to: {e}")
         return False
     return True
 
-
-    
-
-
-
 try:
-    
     common_tests.open_hamburger(driver)
     open_signup_modal()
     click_create_account()
@@ -265,18 +230,12 @@ try:
     press_and_input_mobile(fake.random_number(digits=9, fix_len=True))
     click_next()
     press_and_input_username(fake.user_name())
-    press_and_input_password(fake.password(length=8,special_chars=True,digits=True,upper_case=True,lower_case=True))
+    press_and_input_password(fake.password(length=8, special_chars=True, digits=True, upper_case=True, lower_case=True))
     click_submit()
 
-
-
     time.sleep(5)
-
     
-        
 finally:
     if not error_occurred:
-        print("Test succesful")
+        print("Test successful")
         driver.quit()
-
-        
