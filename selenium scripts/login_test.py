@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from webdriver_config import setup_driver
+import common_tests
 
 driver = setup_driver()
 driver.get("https://www.dev.tokiasia.com/")
@@ -14,22 +15,6 @@ delay = 0.5
 # add category you want to test
 
 
-def open_hamburger():
-    try:
-        hamburger = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((
-                By.XPATH, 
-                "//button[@aria-expanded='false' and @aria-haspopup='dialog' and @data-state='closed' and contains(@class, 'flex')]"
-            ))
-        )
-        hamburger.click()
-        print("Opened hamburger menu")
-
-
-    except Exception as e:
-        print(f"Failed to open hamburger menu due to: {e}")
-        return False
-    return True
 
 def open_login_modal():
     try:
@@ -93,7 +78,7 @@ def press_login():
         login = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
                 By.XPATH, 
-                "/html/body/div[6]/div/div[1]/form/button"
+                "//button[contains(text(), 'Log in') and @type='submit']"
             ))
         )
         login.click()
@@ -111,7 +96,7 @@ def press_login():
 
 try:
 
-    open_hamburger()
+    common_tests.open_hamburger(driver)
     open_login_modal()
     press_and_input_username("zivseller")
     press_and_input_password("TEST")
