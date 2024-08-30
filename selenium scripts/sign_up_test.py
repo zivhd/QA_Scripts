@@ -9,7 +9,7 @@ import common_tests
 fake = Faker()
 
 driver = setup_driver()
-driver.get("https://www.dev.tokiasia.com/")
+driver.get("https://www.tokiasia.com/")
 error_occurred = False
 delay = 0.5  
 
@@ -126,6 +126,11 @@ def press_and_input_email(email):
         return False
     return True
 
+
+def digit_iterable(n):
+    for digit in str(n):
+        yield int(digit)
+
 def press_and_input_mobile(mobile):
     try:
         mobile_field = WebDriverWait(driver, 10).until(
@@ -134,14 +139,21 @@ def press_and_input_mobile(mobile):
                 "//input[@placeholder='+639']"
             ))
         )
+        # Click the field to focus
         mobile_field.click()
-        print("Clicked mobile field")
-        mobile_field.send_keys(mobile)
+        time.sleep(1)
+        for key in digit_iterable(mobile):
+            mobile_field.send_keys(key)
+            print(f"Sent {key} to mobile field")
+            time.sleep(0.1)
+        time.sleep(1)  # Wait to see if the input is registered
         print(f"Sent {mobile} to mobile field")
     except Exception as e:
         print(f"Failed to input mobile due to: {e}")
         return False
     return True
+
+
 
 def press_and_input_username(username):
     try:
@@ -218,24 +230,33 @@ def click_submit():
         return False
     return True
 
+
 try:
+    email = f"ziv.rodriguez+test{fake.random_number(digits=2, fix_len=True)}@tokiasia.com"
     common_tests.open_hamburger(driver)
     open_signup_modal()
     click_create_account()
     click_get_started()
     press_and_input_first_name(fake.name())
+    time.sleep(delay)
     press_and_input_last_name(fake.last_name())
+    time.sleep(delay)
     press_and_input_display_name(fake.user_name())
-    press_and_input_email(fake.email())
-    press_and_input_mobile(fake.random_number(digits=9, fix_len=True))
+    time.sleep(delay)
+    press_and_input_email(email)
+    time.sleep(delay)
+    press_and_input_mobile(fake.random_number(digits=4, fix_len=True))
+    time.sleep(delay)
     click_next()
     press_and_input_username(fake.user_name())
+    time.sleep(delay)
     press_and_input_password(fake.password(length=8, special_chars=True, digits=True, upper_case=True, lower_case=True))
+    time.sleep(delay) 
     click_submit()
 
     time.sleep(5)
-    
+
 finally:
     if not error_occurred:
         print("Test successful")
-        driver.quit()
+        
