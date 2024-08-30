@@ -1,52 +1,28 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.edge.service import Service
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+from webdriver_config import setup_driver
+from faker import Faker
+import common_tests
 
-# Set up the WebDriver for your device. im using edge
-# Set up Chrome options
-chrome_options = Options()
-chrome_options.add_argument("--start-maximized")
+fake = Faker()
 
-# Specify the path to chromedriver
-service = Service('/usr/bin/chromedriver')
-
-# Initialize WebDriver
-driver = webdriver.Chrome(service=service, options=chrome_options)
-
-# add website here
+driver = setup_driver()
 driver.get("https://www.dev.tokiasia.com/")
 error_occurred = False
 delay = 0.5  
-# add category you want to test
 
 
-def open_hamburger():
-    try:
-        hamburger = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((
-                By.XPATH, 
-                "//button[@aria-expanded='false' and @aria-haspopup='dialog' and @data-state='closed' and contains(@class, 'flex')]"
-            ))
-        )
-        hamburger.click()
-        print("Opened hamburger menu")
 
-
-    except Exception as e:
-        print(f"Failed to open hamburger menu due to: {e}")
-        return False
-    return True
 
 def open_signup_modal():
     try:
         signup = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
                 By.XPATH, 
-                "/html/body/div[4]/div[2]/div[1]/div/button[2]"
+                "//button[contains(text(), 'Sign Up')]"
             ))
         )
         signup.click()
@@ -64,7 +40,7 @@ def click_create_account():
         create_account = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
                 By.XPATH, 
-                "/html/body/div[6]/div/div[1]/a"
+                "//a[contains(text(), 'Create an Account')]"
             ))
         )
         create_account.click()
@@ -82,7 +58,7 @@ def click_get_started():
         get_started = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
                 By.XPATH, 
-                "/html/body/div[1]/div[2]/a"
+                "//a[contains(text(), 'Get started')]"
             ))
         )
         get_started.click()
@@ -242,7 +218,7 @@ def click_next():
         next = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
                 By.XPATH, 
-                "/html/body/div[1]/div[4]/div/div[2]/div/div[2]/form/div[8]/button"
+                "//button[contains(text(), 'Next')]"
             ))
         )
         next.click()
@@ -259,7 +235,7 @@ def click_submit():
         next = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((
                 By.XPATH, 
-                "/html/body/div[1]/div[4]/div/div[2]/div/div[2]/form/div[5]/button[2]"
+                "//button[contains(text(), 'Submit')]"
             ))
         )
         next.click()
@@ -272,41 +248,24 @@ def click_submit():
     return True
 
 
-def press_login():
-    try:
-        login = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((
-                By.XPATH, 
-                "/html/body/div[6]/div/div[1]/form/button"
-            ))
-        )
-        login.click()
-        print("login pressed")
-
-
-    except Exception as e:
-        print(f"Failed to open hamburger menu due to: {e}")
-        return False
-    return True
-    
     
 
 
 
 try:
-
-    open_hamburger()
+    
+    common_tests.open_hamburger(driver)
     open_signup_modal()
     click_create_account()
     click_get_started()
-    press_and_input_first_name("test")
-    press_and_input_last_name("testlastname")
-    press_and_input_display_name("testdisplay")
-    press_and_input_email("testttttt@gmail.com")
-    press_and_input_mobile("123456789")
+    press_and_input_first_name(fake.name())
+    press_and_input_last_name(fake.last_name())
+    press_and_input_display_name(fake.user_name())
+    press_and_input_email(fake.email())
+    press_and_input_mobile(fake.random_number(digits=9, fix_len=True))
     click_next()
-    press_and_input_username("testUser")
-    press_and_input_password("testpassword123!")
+    press_and_input_username(fake.user_name())
+    press_and_input_password(fake.password(length=8,special_chars=True,digits=True,upper_case=True,lower_case=True))
     click_submit()
 
 

@@ -5,19 +5,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+from webdriver_config import setup_driver
 
-# Set up the WebDriver for your device. im using edge
-# Set up Chrome options
-chrome_options = Options()
-chrome_options.add_argument("--start-maximized")
-
-# Specify the path to chromedriver
-service = Service('/usr/bin/chromedriver')
-
-# Initialize WebDriver
-driver = webdriver.Chrome(service=service, options=chrome_options)
-
-# add website here
+driver = setup_driver()
 driver.get("https://www.dev.tokiasia.com/")
 error_occurred = False
 delay = 0.5  

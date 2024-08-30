@@ -1,6 +1,12 @@
-*requirements*
-- python 3
-- selenium (pip install selenium)
+*Python3 is needed for this*
+*Use version 3.12.3 for better compatibility*
+
+Run the following command to install all requirements:
+```
+ pip install -r requirements.txt
+```
+
+
 
 *filter_test.py*
  ```
